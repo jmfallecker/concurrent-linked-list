@@ -134,6 +134,21 @@ namespace ConcurrentLinkedList.Tests.Unit
         }
 
         [Test]
+        public void When_Node_Does_Not_Exist_And_Is_Removed_Return_False()
+        {
+            // Given a value to remove (that is not already added previously)
+            const string VALUE = "ValueToRemoveThatDoesNotAlreadyExist";
+            const string EXPECTED_RESULT = default(string);
+
+            // And the value is attempted to be removed
+            bool isRemoved = _linkedList.Remove(VALUE, out dynamic result);
+
+            // When we check if the value is removed
+            Assert.That(result, Is.EqualTo(EXPECTED_RESULT));
+            Assert.That(isRemoved, Is.False);
+        }
+
+        [Test]
         public void When_Node_Exists_Checking_Contains_Should_Return_True()
         {
             // Given a value to add

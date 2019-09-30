@@ -122,15 +122,16 @@ namespace ConcurrentLinkedList
                     previous.Next = successor;
                     current = successor;
                 }
+                else if (state == NodeState.REM)
+                {
+                    return false;
+                }
                 else if (!current.Value.Equals(value))
                 {
                     previous = current;
                     current = current.Next;
                 }
-                else if (state == NodeState.REM)
-                {
-                    return false;
-                }
+                
                 else if (state == NodeState.INS)
                 {
                     var originalValue = current.AtomicCompareAndExchangeState(NodeState.REM, NodeState.INS);
