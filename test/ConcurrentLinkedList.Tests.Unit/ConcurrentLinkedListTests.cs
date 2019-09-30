@@ -112,7 +112,27 @@ namespace ConcurrentLinkedList.Tests.Unit
             AssertLinkedListHasNoCycles(_linkedList);
             AssertLinkedListContainsNumberOfValidNodes(numberNodes + _initialNodesInList, _linkedList);
         }
-       
+
+        [Test]
+        public void When_Node_Is_Added_Then_Removed_Checking_Contains_Should_Return_False()
+        {
+            // Given a value to add
+            const string VALUE = "ValueToAddThenRemove";
+
+            // And the value is added
+            bool isAdded = _linkedList.TryAdd(VALUE);
+            Assert.That(isAdded, Is.True);
+
+            // And then the value is removed
+            bool isRemoved = _linkedList.Remove(VALUE, out dynamic valueRemoved);
+            Assert.That(isRemoved, Is.True);
+            Assert.That(valueRemoved, Is.EqualTo(VALUE));
+
+            // When we check if the value is there
+            bool contains = _linkedList.Contains(VALUE);
+            Assert.That(contains, Is.False);
+        }
+
         [Test]
         public void When_Node_Exists_Checking_Contains_Should_Return_True()
         {
